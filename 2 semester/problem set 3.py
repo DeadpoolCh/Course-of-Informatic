@@ -89,33 +89,38 @@ def is_scolarship_correct(best_students, active_students, delinquent_studens, la
 	for stud in best_students:
 		if stud in scolarships:
 			count_best+=1
-	if count_best==len(best_students): count_res+=1; list_res.append('1 True')
+	if count_best==len(best_students): count_res+=1
 	count_act=0
 	for stud in active_students:
 		if stud in scolarships and stud not in best_students:
 			count_act+=1
-	if count_act<=len(active_students)//2+1: count_res+=1; list_res.append('2 True')
+	if count_act<=len(active_students)//2+1: count_res+=1
 	count_deling=0
 	for stud in delinquent_studens:
 		if stud in scolarships:
 			count_deling+=1
-	if count_deling<=1: count_res+=1; list_res.append('3 True')
+	if count_deling<=1: count_res+=1
 	count_lag=0
 	for stud in lagging_students:
 		if stud in scolarships:
 			count_lag+=1
-	if count_lag==0: count_res+=1; list_res.append('4 True')
+	if count_lag==0: count_res+=1
 	usual=0
-	for stud in all_students:
-		if all(stud not in lst for lst in all_lists): usual+=1
-	if usual<=3: count_res+=1; list_res.append('5 True')
+	for stud in all_lists:
+		if stud in scolarships: usual+=1
+	if usual<=3: count_res+=1
 	if count_res==5: result=True
-	return result, list_res
+	return result
 all_students = ["Орехов Максим", "Морозова Мия", "Семенов Александр", "Горбунов Виктор", "Владимиров Фёдор",
                 "Любимова Виктория", "Иванов Марк", "Кузнецова Дарья", "Кузнецова Екатерина", "Осипов Михаил",
                 "Лебедев Александр", "Меркулов Артём", "Беляева Вера", "Дорохов Никита", "Власов Владимир",
                 "Семенова Мария", "Михайлов Савва", "Карасев Артём", "Мухин Михаил", "Белякова Юлия",
                 "Судаков Фёдор", "Власов Матвей", "Суслова Алина", "Королева Амелия", "Панин Дмитрий"]
+
+all_students2 = ["Орехов Максим", "Морозова Мия", "Семенов Александр",
+                "Иванов Марк", "Меркулов Артём", "Беляева Вера", "Дорохов Никита", "Власов Владимир",
+                "Семенова Мария", "Михайлов Савва", "Мухин Михаил", "Белякова Юлия",
+                "Судаков Фёдор", "Суслова Алина", "Королева Амелия"]
 
 best_students = ["Любимова Виктория", "Карасев Артём", "Власов Матвей", "Панин Дмитрий"]
 
@@ -128,9 +133,9 @@ lagging_students = ["Горбунов Виктор", "Владимиров Фё�
 
 scolarships = ["Любимова Виктория", "Карасев Артём", "Власов Матвей", "Панин Дмитрий", "Кузнецова Екатерина", "Судаков Фёдор"]
 
-all_lists=[best_students,active_students,delinquent_studens,lagging_students]
-# assert is_scolarship_correct(best_students, active_students, delinquent_studens, lagging_students, all_students, scolarships)
-print(is_scolarship_correct(best_students, active_students, delinquent_studens, lagging_students, all_students, scolarships))
+all_lists=list(set(all_students)-set(best_students)-set(active_students)-set(lagging_students))
+assert is_scolarship_correct(best_students, active_students, delinquent_studens, lagging_students, all_students, scolarships)
+# print(is_scolarship_correct(best_students, active_students, delinquent_studens, lagging_students, all_students, scolarships))
 
 
 
