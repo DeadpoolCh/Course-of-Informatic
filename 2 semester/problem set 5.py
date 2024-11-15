@@ -21,24 +21,31 @@ def wheel(time_limit: int, pause: int):
 			time_limit: float
 				время (в секундах), в течение которого должна производиться отрисовка спиннера
 			pause: float
-				время (в секундах) задержки между сменой символов спиннера
+				время (в милисекундах) задержки между сменой символов спиннера
 
 		Выход:
 			None
 	"""
 	elapsed_time=0
 	wheels=r'\|/-'
+	print('Thinking: ',end='')
 	while True:
 		if elapsed_time>=time_limit:
 			break
 		for i in range(time_limit*len(wheels)):
-			print(f'Thinking: {wheels[i%len(wheels)]}', end='\r')
-			for _ in range(pause*10**8):
+			print(wheels[i%len(wheels)], end='')
+			for _ in range(pause*10**7):
 				pass
+			print('\b', end='', flush=True)
 		elapsed_time+=1
 
 
-wheel(50,2)
+wheel(50**3,2)
+
+
+
+
+
 
 
 
