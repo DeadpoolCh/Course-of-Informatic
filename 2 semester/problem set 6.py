@@ -36,46 +36,34 @@ class Vector3D:
 			print("Попробуйте ввести координаты снова. Используйте только числа с плавающей точкой")
 	def __iter__(self) -> Generator[float, None, None]:
 		pass
-
 	def __repr__(self) -> str:
 		return f"Vector3D{self._x,self._y,self._z}"
-
 	def __abs__(self) -> float:
-		return (self._x**2+self._y**2+self._z**2)**0.5
-
+		return f"{(self._x**2+self._y**2+self._z**2)**0.5:.2f}"
 	def __bool__(self) -> bool:
 		koord=[self._x==0,self._y==0,self._z==0]
 		if any(koord): return False
 		else: return  True
-
 	def __eq__(self, other: Any) -> bool:
 		koords=[self._x==other._x,self._y==other._y,self._z==other._z]
 		if all(koords): return True
 		else: return False
-
 	def __neg__(self):
 		return Vector3D(self._x*(-1),self._y*(-1),self._z*(-1))
-
 	def __add__(self, other):
 		return Vector3D(self._x+other._x,self._y+other._y,self._z+other._z)
-
 	def __sub__(self, other):
 		return Vector3D(self._x-other._x,self._y-other._y,self._z-other._z)
-
 	def __mul__(self, scalar: float):
-		pass
-
+		return Vector3D(self._x*scalar,self._y*scalar,self._z*scalar)
 	def __rmul__(self, scalar: float):
-		pass
-
+		return Vector3D(scalar*self._x,scalar*self._y,scalar*self._z)
 	def __truediv__(self, scalar):
-		pass
-
+		return Vector3D(self._x/scalar,self._y/scalar,self._z/scalar)
 	def dot(self, other) -> float:
-		pass
-
+		return Vector3D(self._x*other._x,self._y*other._y,self._z*other._z)
 	def cross(self, other):
-		pass
+		return Vector3D(self._y*other._z-self._z*other._y,self._x*other._z-self._z*other._x,self._x*other._y-self._y*other._x)
 
 	@property
 	def x(self) -> float:
@@ -99,5 +87,7 @@ print(vector.__eq__(vector2))
 print(vector.__neg__())
 print(vector.__add__(vector2))
 print(vector.__sub__(vector2))
+print(vector.dot(vector2))
+print(vector.cross(vector2))
 
 
