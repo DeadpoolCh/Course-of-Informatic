@@ -40,7 +40,7 @@ def wheel(time_limit: int, pause: int):
 		elapsed_time+=1
 
 
-wheel(50**3,2)
+wheel(50**3,10)
 
 
 
