@@ -62,13 +62,13 @@ def measure_time(analyzer, method, *args):
 
 
 if __name__ == "__main__":
-	fasta_file = "seq10000.fasta"
+	fasta_file = "allseq2.fasta"
 	analyzer = ProteinAnalyzer(fasta_file)
 
 	# Измеряем время выполнения
 	time_single, _ = measure_time(analyzer, analyzer.analyze_single_thread)
-	time_threads, _ = measure_time(analyzer, analyzer.analyze_multithreading, 4)
-	time_processes, _ = measure_time(analyzer, analyzer.analyze_multiprocessing, 4)
+	time_threads, _ = measure_time(analyzer, analyzer.analyze_multithreading, 24)
+	time_processes, _ = measure_time(analyzer, analyzer.analyze_multiprocessing, 24)
 
 	print(f"Однопоточное выполнение: {time_single:.4f} сек")
 	print(f"Многопоточное выполнение (4 потока): {time_threads:.4f} сек")
