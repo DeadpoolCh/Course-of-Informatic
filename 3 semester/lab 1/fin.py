@@ -18,7 +18,7 @@ amino_acid = {
 	'Q': 'hydrophilic neutral',
 	'D': 'hydrophilic negative', 'E': 'hydrophilic negative',
 	'K': 'hydrophilic positive', 'R': 'hydrophilic positive', 'H': 'hydrophilic positive',
-	'B': 'special', 'Z': 'special', 'X': 'unkown',
+	'B': 'special', 'Z': 'special', 'X': 'unknown',
 	'U': 'hydrophilic neutral'
 }
 
