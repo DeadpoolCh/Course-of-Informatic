@@ -8,21 +8,22 @@ import asyncio
 async def download_fasta(input_ID:list,output_f):
     count_validated=0
     count_errors=0
-    with open(output_f,'w',encoding='utf-8') as f:
+    async with aiohttp.ClientSession() as session:
+        tasks=[]
         for ID in input_ID:
             query_link = f"https://rest.uniprot.org/uniprotkb/search?query={ID}&format=fasta"
-            async with aiohttp.ClientSession() as session:
-                try:
-                    async with session.get(query_link) as response:
-                        if response.status == 200:
-                            data = await response.text()
-                            f.write(data)
-                            count_validated+=1
-                        else:
-                            response.raise_for_status()
-
-                except aiohttp.ClientError:
-                    count_errors+=1
+            tasks.append(session.get(query_link))
+        responses = await asyncio.gather(*tasks, return_exceptions=True)
+        with open(output_f, 'w', encoding='utf-8') as f:
+            for response, ID in zip(responses, input_ID):
+                if isinstance(response, Exception):
+                    count_errors += 1
+                    continue
+                if response.status == 200:
+                    data = await response.text()
+                    f.write(data)
+                    count_validated += 1
+                else: count_errors += 1
     return count_validated,count_errors
 
 
@@ -44,7 +45,7 @@ plt.xlabel('Кол-во запросов')
 plt.ylabel('Время, сек')
 plt.legend()
 plt.grid()
-plt.savefig('output3.png')
+plt.savefig('output5.png')
 plt.show()
 
 df = pd.DataFrame.from_dict(times,columns=["Time",'Valid','Error'],orient='index')
@@ -57,7 +58,7 @@ plt.xlabel("Количество запросов")
 plt.ylabel('Количество')
 plt.title('Распределение успешных и ошибочных запросов')
 plt.grid()
-plt.savefig('output4.png')
+plt.savefig('output6.png')
 plt.show()
 
 
